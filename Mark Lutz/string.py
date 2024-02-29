@@ -54,11 +54,10 @@ print(int('1101', 2))  # 13
 print(bin(13))  # 0b1101
 
 
-
-
-
-
-
 s = 'HelloTro!'
 sub = 'Tro!'
 print(s[-len(sub):] == sub)  # True
+
+
+print(''.join(sorted('something')))  # eghimnost
+print([' '.join(x + '20' for x in 'something')])  # ['s20 o20 m20 e20 t20 h20 i20 n20 g20']

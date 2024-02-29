@@ -48,3 +48,8 @@ Output :
         4 four
 """
 # print([(k, unsorted_d[k]) for k in sorted_d])  # [(1, 'one'), (3, 'three'), (4, 'four')]
+
+
+di = {1: '1', 2: '2'}
+a, b = di.items()
+print(a, b)  # (1, '1') (2, '2')
