@@ -15,7 +15,7 @@ l[4: 8] = []  # deletion
 print(l)
 
 
-# CHAPTER 7
+# CHAPTER 8
 initial_lst = [1, 2, 3]
 lst_to_add = [4, 5, 6]
 print(initial_lst + lst_to_add)  # [1, 2, 3, 4, 5, 6]
