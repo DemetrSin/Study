@@ -87,3 +87,32 @@ lst = sorted([x.lower() for x in lst_for_sort])  # makes changes in objects!
 print(lst)  # ['abc', 'abd', 'abe']
 
 """Append and pop often makes LIFO logic"""
+
+
+# !!!!
+l = [1, 2, 3]
+x = l * 4
+y = [l] * 4
+
+print(x)  # [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
+print(y)  # [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]
+
+l[1] = 0
+print(x)  # [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3]
+print(y)  # [[1, 0, 3], [1, 0, 3], [1, 0, 3], [1, 0, 3]]
+
+l = [1, 2, 3]
+y = [list(l)] * 4  # copy! but same copy for every nested list
+l[1] = 0  # not touch Y! as above
+print(y)  # [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]
+y[0][1] = 99
+print(y)  # [[1, 99, 3], [1, 99, 3], [1, 99, 3], [1, 99, 3]]
+l = [1, 2, 3]
+y = [list(l) for i in range(4)]
+y[0][1] = 99
+print(y)  # [[1, 99, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]
+
+
+L = ['grail']
+L.append(L)
+print(L)  # ['grail', [...]]
