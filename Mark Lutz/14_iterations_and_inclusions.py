@@ -93,3 +93,65 @@ def f(a, b, c, d):
 print(f(*[1, 2, 3, 4]))
 print(f(*[x for x in open('new.py').readline(4)]))
 
+
+r = range(2)
+it1 = iter(r)  #
+print(next(it1))  # 0
+print(next(it1))  # 1
+# print(next(it1))  # StopIteration Error
+it2 = iter(r)
+print(next(it2))  # 0
+print(next(it2))  # 1
+# print(next(it2))  # StopIteration Error
+
+
+m = map(abs, [-1, -2])  # already iterator
+print(m.__next__())  # 1
+print(m.__next__())  # 2
+print([x for x in m])  # []
+m = map(abs, [-1, -2])
+print([x for x in m])  # [1, 2]
+it_m = iter(m)  # Do not create new iterator!!!
+# print(next(it_m))  # StopIteration Error
+
+
+z = zip([1, 2, 3], ['a', 'b', 'c'])  # already iterator
+print(list(z))  # [(1, 'a'), (2, 'b'), (3, 'c')]
+print([x for x in z])  # []
+z = zip([1, 2, 3], ['a', 'b', 'c'])
+print([x for x in z])  # [(1, 'a'), (2, 'b'), (3, 'c')]
+
+print(list(filter(bool, ['', 0, 1, 'a'])))  # [1, 'a']
+print([x for x in ['', 0, 1, 'a'] if bool(x)])  # [1, 'a']
+print([x for x in ['', 0, 1, 'a'] if x])  # [1, 'a'] same as ^, but preferable
+
+d = {1: 'a', 2: 'b', 3: 'c'}
+d_keys = d.keys()
+# print(next(d))  # TypeError: 'dict' object is not an iterator
+d_it = iter(d_keys)
+print(next(d_it))  # 1
+print(next(d_it))  # 2
+print(next(d_it))  # 3
+# print(next(d_it))  # StopIteration
+d_it2 = iter(d_keys)
+print(next(d_it2))  # 1
+print(next(d_it2))  # 2
+
+# But we can just make dict as iterator
+
+d_in_it = iter(d)
+print(next(d_in_it))  # 1
+print(next(d_in_it))  # 2
+
+d_val = d.values()
+# print(next(d_val))  # TypeError: 'dict_values' object is not an iterator
+d_val_it = d_val.__iter__()
+print(d_val_it.__next__())  # a
+print(d_val_it.__next__())  # b and etc...
+
+# And we can make it list
+
+print(list(d))  # [1, 2, 3]
+print(list(d.keys()))  # [1, 2, 3]
+print(list(d.values()))  # ['a', 'b', 'c']
+print(list(d.items()))  # [(1, 'a'), (2, 'b'), (3, 'c')]
