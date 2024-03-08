@@ -1,3 +1,6 @@
+import sys
+
+
 def f(a):
     a = 99
     return a
@@ -138,5 +141,82 @@ print(minmax(less_than, 8, 4, 2, 1, 19))  # 1
 print(minmax(greater_then, 8, 4, 2, 1, 19))  # 19
 
 
+# For sets emulation
 
+
+def intersect(*args):
+    res = []
+    for x in args[0]:
+        if x in res:
+            continue
+        for other in args[1:]:
+            if x not in other:
+                break
+        else:
+            res.append(x)
+    return res
+
+
+def union(*args):
+    res = []
+    for seq in args:
+        for x in seq:
+            if x not in res:
+                res.append(x)
+    return res
+
+
+s1, s2, s3 = 'spam', 'scam', 'slam'
+
+print(intersect(s1, s2))  # ['s', 'a', 'm']
+print(union(s1, s2))  # ['s', 'p', 'a', 'm', 'c']
+
+
+def tester(func, items, trace=True):
+    for i in range(len(items)):
+        items = items[1:] + items[:1]
+        if trace:
+            print(items)
+        print(sorted(func(*items)))
+
+
+print(tester(intersect, ('a', 'abcdefg', 'abdst', 'albmcnd')))
+print(tester(union, ('a', 'abcdefg', 'abdst', 'albmcnd')))
+print(intersect([1, 2, 1, 3], [1, 1, 4]))  # [1]
+print(union([1, 2, 1, 3], [1, 1, 4]))  # [1, 2, 3, 4]
+print(tester(intersect, ('ababa', 'abcdefga', 'aaaab'), False))
+
+
+# print emulation
+
+
+def print3(*args, **kwargs):
+    sep = kwargs.get('sep', ' ')
+    end = kwargs.get('end', '\n')
+    file = kwargs.get('file', sys.stdout)
+    if kwargs:
+        raise TypeError(f'extra keywords {kwargs}')
+    output = ''
+    first = True
+    for arg in args:
+        output += ('' if first else sep) + str(arg)
+        first = False
+    file.write(output + end)
+
+
+print3([1, 2, 3], 'spam', {'a': 24, 24: 'a'})  # [1, 2, 3] spam {'a': 24, 24: 'a'}
+# print3([1, 2, 3], 'spam', {'a': 24, 24: 'a'}, name='bob')  # TypeError
+
+
+def print4(*args, sep=' ', end='\n', file=sys.stdout):
+    output = ''
+    first = True
+    for arg in args:
+        output += ('' if first else sep) + str(arg)
+        first = False
+    file.write(output + end)
+
+
+print4([1, 2, 3], 'spam', {'a': 24, 24: 'a'})  # [1, 2, 3] spam {'a': 24, 24: 'a'}
+# print4([1, 2, 3], 'spam', {'a': 24, 24: 'a'}, name='bob')  # TypeError
 
