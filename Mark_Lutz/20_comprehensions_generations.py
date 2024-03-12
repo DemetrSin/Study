@@ -189,3 +189,250 @@ for x in line.split():
     if len(x) > 1:
         res += x.upper()
 print(res)  # AABBB
+
+
+G = (c * 4 for c in 'SPAM')
+print(list(G))  # ['SSSS', 'PPPP', 'AAAA', 'MMMM']
+
+
+def times_four(s):
+    for c in s:
+        yield c * 4
+
+
+print(list(times_four('SPAM')))  # ['SSSS', 'PPPP', 'AAAA', 'MMMM']
+
+G = times_four('SPAM')
+print(next(G))  # SSSS
+print(next(G))  # PPPP
+i = iter(G)  # ['AAAA', 'MMMM']
+print(list(i))
+
+g = times_four('SPAM')
+print(next(g))  # SSSS
+print(next(g))  # PPPP
+
+
+G = (c * 4 for c in 'SPAM')
+I = iter(G)
+print(next(I))  # SSSS
+i = iter(G)
+print(next(i))  # PPPP
+print(next(I))  # AAAA
+print(next(i))  # MMMM
+
+
+line = 'aa bbb c'
+
+
+def gensub(s):
+    for x in s.split():
+        if len(x) > 1:
+            yield x.upper()
+
+
+print(''.join(gensub(line)))  # AABBB
+print(gensub(line))  # <generator object gensub at 0x000001CCAA1399A0>
+print(gensub(line).__next__())  # AA
+print(gensub(line).__next__())  # AA
+
+g = gensub(line)
+print(iter(g) is g)  # True
+print(id(iter(g)), id(g))  # 1640124684704 1640124684704
+# So sure
+print(id(iter(g)) == id(g))  # True
+
+print(next(g))  # AA
+print(next(g))  # BBB
+
+
+def both(n):
+    for i in range(n):
+        yield i
+    for i in (x ** 2 for x in range(n)):
+        yield i
+
+
+print(list(both(5)))  # [0, 1, 2, 3, 4, 0, 1, 4, 9, 16]
+
+
+def both_new(n):
+    yield from range(n)
+    yield from (x ** 2 for x in range(n))
+
+
+print(list(both_new(5)))  # [0, 1, 2, 3, 4, 0, 1, 4, 9, 16]
+print(': '.join(str(i) for i in both_new(5)))  # 0: 1: 2: 3: 4: 0: 1: 4: 9: 16
+
+
+def f(a, b, c):
+    return f"{a},{b} and {c}"
+
+
+print(f(*range(3)))  # 0,1 and 2
+print(f(*(i for i in range(3))))  # 0,1 and 2
+print(f(*[i for i in range(3)]))  # 0,1 and 2
+
+d = {'a': 'Alfa', 'b': 'Beta', 'c': 'Cetta'}
+
+print(f(*d))  # a,b and c
+print(f(**d))  # Alfa,Beta and Cetta
+print(f(*d.values()))  # Alfa,Beta and Cetta
+
+
+l, s = [1, 2, 3], 'spam'
+
+for i in range(len(s)):
+    s = s[1:] + s[:1]
+    print(s, end=' ')  # pams amsp mspa spam
+
+for i in range(len(l)):
+    l = l[1:] + l[:1]
+    print(l, end=' ')  # [2, 3, 1] [3, 1, 2] [1, 2, 3]
+
+for i in range(len(s)):
+    s = s[i:] + s[:i]
+    print(s, end=' ')  # spam pams mspa amsp
+
+
+def scramble(seq):
+    res = []
+    for i in range(len(seq)):
+        seq = seq[i:] + seq[:i]
+        res.append(seq)
+    return res
+
+
+print(scramble('spam'))  # ['spam', 'pams', 'mspa', 'amsp']
+
+
+def scramble2(seq):
+    return [seq[i:] + seq[:i] for i in range(len(seq))]
+
+
+print(scramble2('spam'))  # ['spam', 'pams', 'amsp', 'mspa']
+
+for x in scramble2((1, 2, 3)):
+    print(x, end=' ')  # (1, 2, 3) (2, 3, 1) (3, 1, 2)
+
+
+def scramble_gen(seq):
+    for i in range(len(seq)):
+        seq = seq[1:] + seq[:1]
+        yield seq
+
+
+def scramble_gen2(seq):
+    for i in range(len(seq)):
+        yield seq[i:] + seq[:i]
+
+
+print(list(scramble_gen('spam')))  # ['pams', 'amsp', 'mspa', 'spam']
+print(list(scramble_gen2((1, 2, 3))))  # [(1, 2, 3), (2, 3, 1), (3, 1, 2)]
+
+for x in scramble_gen2((1, 2, 3)):
+    print(x, end=' ')
+
+s = 'spam'
+g = (s[i:] + s[:i] for i in range(len(s)))
+print(list(g))  # ['spam', 'pams', 'amsp', 'mspa']
+t = (1, 2, 3)
+g = (t[i:] + t[:i] for i in range(len(t)))
+print(list(g))  # [(1, 2, 3), (2, 3, 1), (3, 1, 2)]
+
+f = lambda seq: (seq[i:] + seq[:i] for i in range(len(seq)))
+print(list(f(s)))  # ['spam', 'pams', 'amsp', 'mspa']
+print(list(f(t)))  # [(1, 2, 3), (2, 3, 1), (3, 1, 2)]
+for x in f(t):
+    print(x)
+
+
+def permute(seq):
+    if not seq:
+        return [seq]
+    else:
+        res = []
+        for i in range(len(seq)):
+            rest = seq[:i] + seq[i+1:]
+            for x in permute(rest):
+                res.append(seq[i:i+1] + x)
+        return res
+
+
+def permute2(seq):
+    if not seq:
+        yield seq
+    else:
+        for i in range(len(seq)):
+            rest = seq[:i] + seq[i+1:]
+            for x in permute2(rest):
+                yield seq[i:i+1] + x
+
+
+print(permute('abc'))  # ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+print(list(permute2('abc')))  # ['abc', 'acb', 'bac', 'bca', 'cab', 'cba']
+print(permute(''))  # ['']
+# print(permute((list(range(10)))))
+# print(list(permute2((list(range(10))))))
+
+
+def my_map(func, *seqs):
+    res = []
+    for args in zip(*seqs):
+        res.append(func(*args))
+    return res
+
+
+print(my_map(abs, [-2, -1, 3, -4]))  # [2, 1, 3, 4]
+print(my_map(pow, [1, 2, 3], [4, 5, 6, 7]))  # [1, 32, 729]
+
+
+def my_map2(func, *seqs):
+    return [func(*args) for args in zip(*seqs)]
+
+
+print(my_map2(abs, [-2, -1, 3, -4]))  # [2, 1, 3, 4]
+print(my_map2(pow, [1, 2, 3], [4, 5, 6, 7]))  # [1, 32, 729]
+
+
+def map_gen(func, *seqs):
+    for args in zip(*seqs):
+        yield func(*args)
+
+
+print(list(map_gen(abs, [-2, -1, 3, -4])))  # [2, 1, 3, 4]
+print(list(map_gen(pow, [1, 2, 3], [4, 5, 6, 7])))  # [1, 32, 729]
+
+
+def map_gen2(func, *seqs):
+    return (func(*args) for args in zip(*seqs))
+
+
+print(list(map_gen2(abs, [-2, -1, 3, -4])))  # [2, 1, 3, 4]
+print(list(map_gen2(pow, [1, 2, 3], [4, 5, 6, 7])))  # [1, 32, 729]
+
+
+def myzip(*seqs):
+    seqs = [list(s) for s in seqs]
+    while all(seqs):
+        yield tuple(s.pop(0) for s in seqs)
+
+
+print(list(myzip('123', 'abcd')))  # [('1', 'a'), ('2', 'b'), ('3', 'c')]
+
+
+def myzip2(*seqs):
+    minlen = min(len(s) for s in seqs)
+    return [tuple(s[i] for s in seqs) for i in range(minlen)]
+
+
+def my_map_pad(*seqs, pad=None):
+    maxlen = max(len(s) for s in seqs)
+    index = range(maxlen)
+    return [tuple((s[i] if len(s) > i else pad)for s in seqs) for i in index]
+
+
+s1, s2 = 'abc', 'xyz123'
+print(myzip2(s1, s2))  # [('a', 'x'), ('b', 'y'), ('c', 'z')]
+print(my_map_pad(s1, s2))  # [('a', 'x'), ('b', 'y'), ('c', 'z'), (None, '1'), (None, '2'), (None, '3')]
+print(my_map_pad(s1, s2, pad=99))  # [('a', 'x'), ('b', 'y'), ('c', 'z'), (99, '1'), (99, '2'), (99, '3')]
