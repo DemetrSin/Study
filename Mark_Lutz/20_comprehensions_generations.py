@@ -436,3 +436,58 @@ s1, s2 = 'abc', 'xyz123'
 print(myzip2(s1, s2))  # [('a', 'x'), ('b', 'y'), ('c', 'z')]
 print(my_map_pad(s1, s2))  # [('a', 'x'), ('b', 'y'), ('c', 'z'), (None, '1'), (None, '2'), (None, '3')]
 print(my_map_pad(s1, s2, pad=99))  # [('a', 'x'), ('b', 'y'), ('c', 'z'), (99, '1'), (99, '2'), (99, '3')]
+
+# Scope/ Namespaces
+
+y = 99
+for y in 'spam':
+    pass
+
+print(y)  # m
+
+y = 'aaa'
+
+
+def f():
+    x = 'bbb'
+    return ''.join(z for z in x + y)
+
+
+# print(z)  # NameError: name 'z' is not defined
+# print(x)  # NameError: name 'x' is not defined
+print(y)  # aaa
+print(f())  # bbbaaa
+
+# Comprehensions
+
+print({x * x for x in range(5)})  # {0, 1, 4, 9, 16}
+print(set(x * x for x in range(5)))  # {0, 1, 4, 9, 16}
+print({x: x * x for x in range(5)})  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+print(dict((x, x * x) for x in range(5)))  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+# print(x)  # NameError: name 'x' is not defined
+
+res = set()
+for x in range(5):
+    res.add(x * x)
+print(res)  # {0, 1, 4, 9, 16}
+print(x)  # 4 !!!
+
+res = dict()
+for x in range(5):
+    res[x] = x * x
+print(res)  # {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+print(x)  # 4 !!!!
+
+print({x * x for x in range(10) if x % 2 == 0})  # {0, 64, 4, 36, 16}
+print({x: x * x for x in range(10) if x % 2 == 0})  # {0: 0, 2: 4, 4: 16, 6: 36, 8: 64}
+
+print({x + y for x in [1, 2, 3] for y in [4, 5, 6]})  # {5, 6, 7, 8, 9}
+print({x: y for x in [1, 2, 3] for y in [4, 5, 6]})  # {1: 6, 2: 6, 3: 6}
+
+print({x + y for x in 'ab' for y in 'cd'})  # {'ad', 'ac', 'bc', 'bd'}
+print({f'{x}:{y}': (ord(x), ord(y)) for x in 'ab' for y in 'cd'})
+# {'a:c': (97, 99), 'a:d': (97, 100), 'b:c': (98, 99), 'b:d': (98, 100)}
+print({k * 2 for k in ['spam', 'ham', 'sausages'] if k[0] == 's'})
+# {'spamspam', 'sausagessausages'}
+print({k.upper(): k * 2 for k in ['spam', 'ham', 'sausages'] if k[0] == 's'})
+# {'SPAM': 'spamspam', 'SAUSAGES': 'sausagessausages'}
