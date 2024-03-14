@@ -21,7 +21,7 @@ print(next(si))  # p
 print(next(si))  # a
 # print(next(si))  # StopIteration Error
 
-f = open('new.py')
+f = open('two.py')
 print(f is iter(f))  # True
 print(f is f.__iter__())  # True
 print(isinstance(f, Iterable), isinstance(f, Iterator))  # True True
@@ -36,54 +36,54 @@ print(e.__next__())  # (0, 's')
 print(list(e))  # [(1, 'p'), (2, 'a'), (3, 'm')] cause of previous line without 0, 's'
 
 
-f = open('new.py')
+f = open('two.py')
 lines = f.readlines()
 lines = [line.rstrip() for line in lines]
 print(lines)
 
 # OR
-print([line.rstrip() for line in open('new.py').readlines()])  # same output as above
+print([line.rstrip() for line in open('two.py').readlines()])  # same output as above
 
-print([(n, line.rstrip()) for n, line in enumerate(open('new.py').readlines()) if line[0] == '#'])
+print([(n, line.rstrip()) for n, line in enumerate(open('two.py').readlines()) if line[0] == '#'])
 
 
 print([x + y for x in 'abc' for y in 'xyz'])  # ['ax', 'ay', 'az', 'bx', 'by', 'bz', 'cx', 'cy', 'cz']
 
 
-print(list(map(lambda x: x.upper(), open('new.py'))))
+print(list(map(lambda x: x.upper(), open('two.py'))))
 print(list(map(lambda x: x ** 3, [x for x in range(5)])))  # [0, 1, 8, 27, 64]
-print(list(sorted(open('new.py'))))
-print(list(zip(open('new.py'), open('new.py'))))
-print(list(enumerate([line.strip() for line in open('new.py').readlines()])))
-print(list(filter(bool, [line.strip() for line in open('new.py').readlines()])))
+print(list(sorted(open('two.py'))))
+print(list(zip(open('two.py'), open('two.py'))))
+print(list(enumerate([line.strip() for line in open('two.py').readlines()])))
+print(list(filter(bool, [line.strip() for line in open('two.py').readlines()])))
 
-print(list(open('new.py')))
-print(tuple(open('new.py')))
-print('&&'.join(open('new.py')))
+print(list(open('two.py')))
+print(tuple(open('two.py')))
+print('&&'.join(open('two.py')))
 
-a, *b = open('new.py')
-print('import' in open('new.py').read())
+a, *b = open('two.py')
+print('import' in open('two.py').read())
 
 l = [1, 2, 3, 4]
-l[1:3] = open('new.py')
+l[1:3] = open('two.py')
 print(l)
 
 l = [45]
-l.extend(open('new.py'))
+l.extend(open('two.py'))
 print(l)
 
 l = [45]
-l.append(open('new.py'))
-print(l)  # [45, <_io.TextIOWrapper name='new.py' mode='r' encoding='cp1251'>]
+l.append(open('two.py'))
+print(l)  # [45, <_io.TextIOWrapper name='two.py' mode='r' encoding='cp1251'>]
 print(list(l[1]))
 
-print(set(open('new.py')))
-print({line.rstrip() for line in open('new.py')})
-print({i: line for i, line in enumerate(open('new.py'))})
-print({line for line in open('new.py') if line.startswith('#')})
-print({i: line for i, line in enumerate(open('new.py')) if line[0] == '#'})
-print(len(max(open('new.py'))))
-print(len(min(open('new.py'))))
+print(set(open('two.py')))
+print({line.rstrip() for line in open('two.py')})
+print({i: line for i, line in enumerate(open('two.py'))})
+print({line for line in open('two.py') if line.startswith('#')})
+print({i: line for i, line in enumerate(open('two.py')) if line[0] == '#'})
+print(len(max(open('two.py'))))
+print(len(min(open('two.py'))))
 
 
 def f(a, b, c, d):
@@ -91,7 +91,7 @@ def f(a, b, c, d):
 
 
 print(f(*[1, 2, 3, 4]))
-print(f(*[x for x in open('new.py').readline(4)]))
+print(f(*[x for x in open('two.py').readline(4)]))
 
 
 r = range(2)

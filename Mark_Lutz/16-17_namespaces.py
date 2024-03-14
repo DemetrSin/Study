@@ -63,7 +63,6 @@ def glob1():
 
 def glob2():
     var = 0
-    import oh
     oh.var += 1
 
 
@@ -240,11 +239,11 @@ def make_open(id):
     builtins.open = custom
 
 
-make_open('spam')  # Custom open call eggs ('new.py',) {}
-f = open('new.py')  # Custom open call spam ('new.py',) {}
+make_open('spam')  # Custom open call eggs ('two.py',) {}
+f = open('two.py')  # Custom open call spam ('two.py',) {}
 print(len(f.read()))  # 1
-make_open('eggs')  # Custom open call eggs ('new.py',) {}
-f = open('new.py')  # Custom open call spam ('new.py',) {}
+make_open('eggs')  # Custom open call eggs ('two.py',) {}
+f = open('two.py')  # Custom open call spam ('two.py',) {}
 f.close()
 
 
