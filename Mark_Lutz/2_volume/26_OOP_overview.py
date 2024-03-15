@@ -36,4 +36,18 @@ def defaulter(lst):
     return [x.name for x in final_data]
 
 
-print(defaulter([i, i1, i2]))  # ['Default', 'Default', 'Default']
+print(defaulter([i, i1, i2]))  # ['Default', 'Default', 'Own version']
+
+
+def set_attr(func, attr_name, *args, **kwargs):
+    setattr(func, attr_name, *args, **kwargs)
+
+
+set_attr(defaulter, 'first', [i, i1, i2])
+
+
+print([x.name for x in defaulter.first])
+defaulter.second = defaulter([i2, i, i1])
+print(defaulter.__dict__)
+# {'first': [<__main__.C object at 0x0000017BD82531D0>, <__main__.C1 object at 0x0000017BD8253090>,
+# <__main__.C2 object at 0x0000017BD8253190>], 'second': ['Own version', 'Default', 'Default']}
