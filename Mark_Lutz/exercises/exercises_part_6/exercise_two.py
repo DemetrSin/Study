@@ -3,9 +3,9 @@
 class MyList:
     def __init__(self, data):
         if isinstance(data, MyList):
-            self.data = data.data[:]
+            self.data = list(data.data[:])
         else:
-            self.data = data[:]
+            self.data = list(data[:])
         self.start = -1
         self.stop = len(self.data) - 1
 
@@ -33,23 +33,24 @@ class MyList:
         return str(self.data)
 
 
-lst = [1, 2, 3, 4, 5]
-lst1 = MyList(lst)
-print(lst1)  # [1, 2, 3, 4, 5]
-lst2 = MyList(lst1)
-print(lst2)  # [1, 2, 3, 4, 5]
+if __name__ == '__main__':
+    lst = [1, 2, 3, 4, 5]
+    lst1 = MyList(lst)
+    print(lst1)  # [1, 2, 3, 4, 5]
+    lst2 = MyList(lst1)
+    print(lst2)  # [1, 2, 3, 4, 5]
 
-print(lst1[2:4])  # [3, 4]
-print(lst2[:2])  # [1, 2]
-print(lst[4])  # 5
-print(lst1 + lst2)  # [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
-print(lst)  # [1, 2, 3, 4, 5] !!! wasn't touched
+    print(lst1[2:4])  # [3, 4]
+    print(lst2[:2])  # [1, 2]
+    print(lst[4])  # 5
+    print(lst1 + lst2)  # [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
+    print(lst)  # [1, 2, 3, 4, 5] !!! wasn't touched
 
-print(lst1.__iter__())  # <generator object MyList.__iter__ at 0x000001E594B0E880>
-print(next(lst1))  # 1
-print(lst1.__next__())  # 2
-print(lst1.__next__())  # 3
-print(lst1.__next__())  # 4
-print(lst1.__next__())  # 5
-# print(lst1.__next__())  # StopIteration
-print()
+    print(lst1.__iter__())  # <generator object MyList.__iter__ at 0x000001E594B0E880>
+    print(next(lst1))  # 1
+    print(lst1.__next__())  # 2
+    print(lst1.__next__())  # 3
+    print(lst1.__next__())  # 4
+    print(lst1.__next__())  # 5
+    # print(lst1.__next__())  # StopIteration
+    print()
