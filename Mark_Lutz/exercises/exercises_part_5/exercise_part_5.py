@@ -24,7 +24,7 @@ def test(filename):
 
 
 if __name__ == '__main__':
-    print(test('../../../../t.txt'))
+    print(test('../../../t.txt'))
 
 
 
