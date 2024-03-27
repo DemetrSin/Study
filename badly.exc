@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "C:\Users\dmitr\PycharmProjects\Study\my.py", line 61, in <module>
+    inverse(0)
+  File "C:\Users\dmitr\PycharmProjects\Study\my.py", line 57, in inverse
+    return 1 / x
+           ~~^~~
+ZeroDivisionError: division by zero
