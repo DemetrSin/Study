@@ -222,3 +222,49 @@ print(getattr(c, 'data'))  # SPAM
 getattr(c, 'managed')  # spam SPAM
 c.s = 's'
 print(getattr(c, 's'))  # s
+
+
+# Property and descriptors
+
+class Property:
+    def __init__(self, fget=None, fset=None, fdel=None, fdoc=None):
+        self.fget = fget
+        self.fset = fset
+        self.fdel = fdel
+        self.fdoc = fdoc
+
+    def __get__(self, instance, instance_type=None):
+        if instance is None:
+            return self
+        if self.fget is None:
+            raise AttributeError('can\'t get attribute')
+        return self.fget(instance)
+
+    def __set__(self, instance, value):
+        if self.fset is None:
+            raise AttributeError('can\'t set attribute')
+        self.fset(instance, value)
+
+    def __delete__(self, instance):
+        if self.fdel is None:
+            raise AttributeError('can\'t delete attribute')
+        self.fdel(instance)
+
+
+class Person:
+    def get_name(self):
+        print('get_name')
+
+    def set_name(self, value):
+        print('set name')
+
+    def delete_name(self):
+        print('delete name')
+
+    name = Property(get_name, set_name, delete_name)
+
+
+x = Person()
+x.name  # get_name
+x.name = 'Bob'  # set name
+del x.name  # delete name
