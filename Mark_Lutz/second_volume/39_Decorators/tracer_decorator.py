@@ -56,3 +56,40 @@ x.append(2)  # Trace: append
 WrapList = tracer(list)
 x = WrapList([1])
 x.append(2)  # Trace: append
+
+
+# WRONG VERSION!
+
+class Tracer:
+    def __init__(self, aClass):
+        self.aClass = aClass
+
+    def __call__(self, *args, **kwargs):
+        self.wrapped = self.aClass(*args, **kwargs)
+        return self
+
+    def __getattr__(self, item):
+        print('Trace:' + item)
+        return getattr(self.wrapped, item)
+
+
+@Tracer
+class Spam:
+    def display(self):
+        print('spam'*5)
+
+
+food = Spam()
+food.display()  # Trace:display  spamspamspamspamspam
+
+
+@Tracer
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+
+bob = Person('bob')
+print(bob.name)  # Trace:name  bob
+sue = Person('sue')
+print(bob.name)  # Trace:name  sue
